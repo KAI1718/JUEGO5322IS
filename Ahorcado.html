@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript">
+		
+		class Ahoracado{
+			intentos=0;
+			ganar=0;
+			palabra=this.palabraAleatoria();
+			cantiLetras=this.espacios(this.palabra);
+			letraIngresar="";
+			gano=false;
+			constructor(){
+				// Muestra la palabra en consola
+				console.log(this.palabra);
+				// Bucle para saber si gano el jugador
+				while(this.gano==false){
+					let soloUna=0;
+					let encontrado;
+					while(soloUna==0){
+						// Pide la letra
+						this.letraIngresar=prompt(this.numeroLetras(this.cantiLetras)+"\nIntentos fallidos: "+this.intentos+"\nIngrese una letra: ");
+						if(this.comprobar(this.letraIngresar)){ // Comprueba si lo ingresado es de una solo letra
+							soloUna++;
+						}else{
+							alert("Solo una letra");
+						}
+					}
+					// Comprobar si se encontro la letra
+					encontrado=false;
+					for(let i=0; i<this.cantiLetras.length; i++){
+						if(this.palabra[i]==this.letraIngresar){
+							alert("Letra encontrada");
+							this.cantiLetras[i]=this.letraIngresar;
+							this.ganar++;
+							encontrado=true;
+							i=this.cantiLetras.length;
+						}
+					}
+					// Si no se encontro se agrega un intentos fallido
+					if(encontrado==false){
+						this.intentos++;
+					}
+					// Si tiene igual a 5 intentos fallidos entonces pierde el jugador
+					if(this.intentos==5){
+						alert("Perdiste");
+						return;
+					}
+					// Si la palabra es igual a las veces que acerto, el jugador gana
+					if(this.ganar==this.palabra.length){
+						this.gano=true;
+					}
+				}
+				// Muestra un mensaje final que gano
+				alert(this.fin(this.palabra,this.intentos,this.gano));
+			}
+			// Obtiene una palabra aleatoriamente dentr del array
+			palabraAleatoria(){
+				let palabras=["anime","gato","puma","cine","pastel","parque"];
+				let p=Math.round(Math.random()*palabras.length-1);
+				let encontrada=palabras[p];
+				return encontrada;
+			}
+			// Obtiene un array en base la logitud de la palabra llenada con _
+			espacios(palabra){
+				let cantiLetras=[];
+				for(let i=0; i<palabra.length; i++){
+					cantiLetras.push("_");
+				}
+				return cantiLetras;
+			}
+			// Obtiene un texto mostrando las letras que adivino
+			numeroLetras(cantiLetras){
+				let texto="";
+				for(let i=0; i<cantiLetras.length; i++){
+					texto+=cantiLetras[i];+" ";
+				}
+				return texto;
+			}
+			// Cumprueba la lo ingresado por el uusario solo sea una letra
+			comprobar(letra){
+				let unaLetra=false;
+				if(letra.length==1){
+					unaLetra=true;
+				}
+				return unaLetra;
+			}
+			// Muestra un mensaje con los intentos y la palabra correcta al acabarse los intentos (5) o al adividar toda la palabra
+			fin(palabra,intentos,gano){
+				let texto="Intentos fallidos: "+intentos+"\nLa palabra era "+palabra;
+				if(gano==true){
+					texto+="\nGanaste";
+				}
+				return texto;
+			}
+		}
+		// Llama a la clase del programa y se ejecuta
+		let a=new Ahoracado();
+
+	</script>
+	<title></title>
+</head>
+<body>
+
+</body>
+</html>
